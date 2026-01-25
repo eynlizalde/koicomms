@@ -284,11 +284,16 @@ section { padding: 80px 0; }
 }
 
 /* --- TRACKS --- */
+.tracks-wrapper {
+    margin-bottom: 50px;
+}
+
 .tracks-wrapper h3 {
-    border-bottom: 1px solid rgba(255,255,255,0.2);
-    padding-bottom: 10px;
+    font-size: 1.8rem;
+    color: var(--dark-green);
     margin-bottom: 25px;
-    color: var(--light-green);
+    padding-bottom: 10px;
+    border-bottom: 2px solid var(--light-green);
 }
 
 .track-category { margin-bottom: 50px; }
@@ -300,17 +305,21 @@ section { padding: 80px 0; }
 }
 
 .track-card {
-    background: rgba(255,255,255,0.1);
-    backdrop-filter: blur(5px);
+    background: var(--white);
     border-radius: 10px;
     overflow: hidden;
-    transition: transform 0.3s;
+    transition: transform 0.3s, box-shadow 0.3s;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
 }
 
-.track-card:hover { transform: translateY(-5px); background: rgba(255,255,255,0.15); }
+.track-card:hover { 
+    transform: translateY(-5px); 
+    box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+}
 
 .card-header {
     background: var(--bright-green);
+    color: var(--white);
     padding: 15px;
     font-weight: 700;
     text-align: center;
@@ -331,6 +340,7 @@ section { padding: 80px 0; }
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 40px;
+    margin-top: 40px;
 }
 
 .requirements-box {
@@ -339,6 +349,7 @@ section { padding: 80px 0; }
     border-radius: 15px;
     box-shadow: 0 10px 30px rgba(0,0,0,0.08);
     border: 1px solid #eee;
+    grid-column: 1 / -1; /* Make it span full width */
 }
 
 .requirements-box h3 {
@@ -347,6 +358,18 @@ section { padding: 80px 0; }
     gap: 10px;
     margin-bottom: 20px;
     color: var(--dark-green);
+    font-size: 1.6rem;
+}
+
+.requirements-box h4 {
+    font-size: 1.2rem;
+    color: var(--leaf-green);
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+.requirements-box ul {
+    list-style: disc;
+    padding-left: 20px;
 }
 
 .styled-list li {
