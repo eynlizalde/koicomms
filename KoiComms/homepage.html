@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Army's Angels Integrated School Inc</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+//  --- a/file:///Applications/XAMPP/xamppfiles/htdocs/KoiComms/homepage.html
+<body>
+
+    <nav class="navbar">
+        <div class="logo-container">
+            <img src="logo.jpeg" alt="AAIS Logo" class="logo">
+            <div class="brand-text">
+                <span class="school-name">Army's Angels Integrated School Inc</span>
+            </div>
+        </div>
+        <ul class="nav-links">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#history">History</a></li>
+            <li><a href="#financialinfo">Fees Information</a></li>
+            <li><a href="#activities">School Activities</a></li>
+            <li><a href="#enrollhere">School Portal</a></li>
+            <li><a href="#contact" class="btn-nav">Contact Us</a></li>
+        </ul>
+    </nav>
+
+    <header class="hero" id="hero-section">
+        <div class="hero-bg" id="hero-bg"></div>
+        <div class="hero-content" id="hero-content">
+            <h1>Army's Angels Integrated Schools Inc</h1>
+            <p>Character Above All</p>
+            <div class="hero-buttons">
+                <a href="#admissions" class="btn-primary">Apply Now</a>
+                <a href="#tracks" class="btn-secondary">Explore Tracks</a>
+                <a href="adminside.html" class="btn-secondary">Admin Login</a>
+            </div>
+        </div>
+    </header>
+
+<footer id="contact">
+        <div class="footer-wireframe-container">
+            
+            <div class="fw-col-left">
+                <div class="fw-brand-row">
+                    <img src="logo.jpeg" alt="AAIS Logo" class="fw-logo">
+                    <span class="fw-school-name">Army's Angels Integrated School Inc</span>
+                </div>
+
+                <div class="fw-row">
+                    <a href="https://www.facebook.com/share/1D87zohRSJ/" target="_blank" class="social-link-clean">
+                        <i class="fa-brands fa-facebook"></i> Visit Facebook Page
+                    </a>
+                </div>
+
+                <div class="fw-row location-row">
+                    <i class="fa-solid fa-location-dot fw-icon"></i>
+                    <div class="fw-text">
+                        <strong style="color: var(--bright-green);">Elementary Campus:</strong><br>
+                        Blk 8 Lots 2&4 Yakal cor. Narra Sts. Engr's Hills, Taguig City
+                    </div>
+                </div>
+            </div>
+
+            <div class="fw-col-right">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/99/Flag_of_the_Philippines.svg/320px-Flag_of_the_Philippines.svg.png" class="fw-flag" alt="PH Flag">
+
+                <div class="fw-row right-align-content">
+                    <i class="fa-solid fa-envelope fw-icon"></i>
+                    <span class="fw-text">aais.privskul@gmail.com</span>
+                </div>
+
+                <div class="fw-row right-align-content">
+                    <i class="fa-solid fa-location-dot fw-icon"></i>
+                    <div class="fw-text">
+                        <strong style="color: var(--bright-green);">High School Campus:</strong><br>
+                        Blk 24 Lots 2-5 Salazar St. Central Signal Village, Taguig City
+                    </div>
+                </div>
+
+                <div class="fw-row right-align-content">
+                    <i class="fa-solid fa-phone fw-icon"></i>
+                    <div class="fw-text">
+                        0917-855-1800 / 0998-842-9557<br>
+                        8688-9578 (PLDT)
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        
+        <div class="copyright">
+            &copy; 2025 Army's Angels Integrated School, Inc. All Rights Reserved.
+        </div>
+    </footer>
+
+    <script>
+        // Accordion Script
+        var acc = document.getElementsByClassName("accordion");
+        for (var i = 0; i < acc.length; i++) {
+            acc[i].addEventListener("click", function() {
+                this.classList.toggle("active");
+                var panel = this.nextElementSibling;
+                var icon = this.querySelector('.fa-chevron-down');
+                
+                if (panel.style.maxHeight) {
+                    panel.style.maxHeight = null;
+                    if(icon) icon.style.transform = "rotate(0deg)";
+                } else {
+                    panel.style.maxHeight = panel.scrollHeight + "px";
+                    if(icon) icon.style.transform = "rotate(180deg)";
+                }
+            });
+        }
+        const heroSection = document.getElementById('hero-section');
+        const heroBg = document.getElementById('hero-bg');
+        const heroContent = document.getElementById('hero-content');
+
+        heroSection.addEventListener('mousemove', (e) => {
+            const x = e.clientX / window.innerWidth;
+            const y = e.clientY / window.innerHeight;
+            const bgX = -x * 30; 
+            const bgY = -y * 30;
+            
+            const contentX = x * 10;
+            const contentY = y * 10;
+
+            heroBg.style.transform = `translate(${bgX}px, ${bgY}px) scale(1.05)`;
+            heroContent.style.transform = `translate(${contentX}px, ${contentY}px)`;
+        });
+    </script>
+</body>
+</html>

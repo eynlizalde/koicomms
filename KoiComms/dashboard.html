@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - AAIS</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Comment -->: Inline styles specific to the dashboard page -->
+    <style>
+        /* DASHBOARD SPECIFIC STYLES */
+        body {
+            /* Ensure the background matches your site theme */
+            background-color: #f4f4f4; 
+        }
+
+        .dashboard-wrapper {
+            /* Pushes content down so it doesn't hide behind the navbar */
+            padding-top: 120px; 
+            padding-bottom: 80px;
+            min-height: 80vh; /* Ensures footer stays at bottom */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .dashboard-container {
+            text-align: center;
+            width: 100%;
+            max-width: 900px;
+            padding: 20px;
+        }
+
+        .header-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #555;
+            margin-bottom: 10px;
+        }
+
+        .greeting {
+            font-size: 2.5rem;
+            font-weight: 800; /* Matching your site's bold fonts */
+            margin-bottom: 60px;
+            color: #333;
+        }
+
+        .button-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 40px;
+            padding: 0 50px;
+        }
+
+        /* STYLED BUTTONS - Adapted to your Site's Green Theme */
+        .dash-btn {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-decoration: none;
+            color: #333;
+            font-weight: 700;
+            font-size: 1.1rem;
+            text-transform: uppercase;
+            padding: 25px;
+            background: white;
+            
+            /* The pill shape */
+            border-radius: 50px; 
+            
+            /* Green Border to match AAIS theme */
+            border: 3px solid #2ecc71; 
+            
+            /* Hard Green Shadow */
+            box-shadow: 8px 8px 0px 0px #27ae60; 
+            
+            transition: all 0.2s ease;
+            position: relative;
+        }
+
+        .dash-btn:hover {
+            background-color: #f9f9f9;
+            transform: translateY(-2px);
+            box-shadow: 10px 10px 0px 0px #27ae60;
+        }
+
+        .dash-btn:active {
+            transform: translate(4px, 4px);
+            box-shadow: 4px 4px 0px 0px #27ae60;
+        }
+
+        @media (max-width: 768px) {
+            .button-grid {
+                grid-template-columns: 1fr;
+            }
+            .greeting {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="logo-container">
+            <img src="logo.jpeg" alt="AAIS Logo" class="logo">
+            <div class="brand-text">
+                <span class="school-name">Army's Angels Integrated School Inc</span>
+            </div>
+        </div>
+        <ul class="nav-links">
+            <li><a href="homepage.html">Home</a></li>
+            <li><a href="homepage.html" onclick="alert('Logging out...');">Log Out</a></li>
+        </ul>
+    </nav>
+
+    <div class="dashboard-wrapper">
+        <div class="dashboard-container">
+            <div class="header-title">Admin Dashboard</div>
+            <h1 class="greeting">Hello, I hope you are having a good day!</h1>
+
+            <div class="button-grid">
+                <a href="homepage.html" class="dash-btn">Home Page</a>
+                <a href="fees.html" class="dash-btn">Information on Fees</a>
+                <a href="history.html" class="dash-btn">History</a>
+                <a href="activities.html" class="dash-btn">School Activities</a>
+            </div>
+        </div>
+    </div>
+
+    <footer id="contact">
+        <div class="footer-wireframe-container">
+            
+            <div class="fw-col-left">
+                <div class="fw-brand-row">
+                    <img src="logo.jpeg" alt="AAIS Logo" class="fw-logo">
+                    <span class="fw-school-name">Army's Angels Integrated School Inc</span>
+                </div>
+
+                <div class="fw-row">
+                    <a href="https://www.facebook.com/share/1D87zohRSJ/" target="_blank" class="social-link-clean">
+                        <i class="fa-brands fa-facebook"></i> Visit Facebook Page
+                    </a>
+                </div>
+
+                <div class="fw-row location-row">
+                    <i class="fa-solid fa-location-dot fw-icon"></i>
+                    <div class="fw-text">
+                        <strong style="color: var(--bright-green);">Elementary Campus:</strong><br>
+                        Blk 8 Lots 2&4 Yakal cor. Narra Sts. Engr's Hills, Taguig City
+                    </div>
+                </div>
+            </div>
+
+            <div class="fw-col-right">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/99/Flag_of_the_Philippines.svg/320px-Flag_of_the_Philippines.svg.png" class="fw-flag" alt="PH Flag">
+
+                <div class="fw-row right-align-content">
+                    <i class="fa-solid fa-envelope fw-icon"></i>
+                    <span class="fw-text">aais.privskul@gmail.com</span>
+                </div>
+
+                <div class="fw-row right-align-content">
+                    <i class="fa-solid fa-location-dot fw-icon"></i>
+                    <div class="fw-text">
+                        <strong style="color: var(--bright-green);">High School Campus:</strong><br>
+                        Blk 24 Lots 2-5 Salazar St. Central Signal Village, Taguig City
+                    </div>
+                </div>
+
+                <div class="fw-row right-align-content">
+                    <i class="fa-solid fa-phone fw-icon"></i>
+                    <div class="fw-text">
+                        0917-855-1800 / 0998-842-9557<br>
+                        8688-9578 (PLDT)
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        
+        <div class="copyright">
+            &copy; 2025 Army's Angels Integrated School, Inc. All Rights Reserved.
+        </div>
+    </footer>
+
+</body>
+</html>
