@@ -61,7 +61,7 @@ $result = $conn->query($sql);
     <nav class="navbar">
         <div class="logo-container">
             <img src="../assets/logo.jpeg" alt="AAIS Logo" class="logo">
-            <div class="brand-text"><span class="school-name">Army's Angels Integrated School Inc</span></div>
+            <div class="brand-text"><span class="school-name">Army's Angels Integrated School, INC.</span></div>
         </div>
         <ul class="nav-links">
             <li><a href="admin_dashboard.php">Dashboard</a></li>

@@ -37,7 +37,7 @@ $adminName = isset($_SESSION['user_name']) ? htmlspecialchars($_SESSION['user_na
         <div class="logo-container">
             <img src="../assets/logo.jpeg" alt="AAIS Logo" class="logo">
             <div class="brand-text">
-                <span class="school-name">Army's Angels Integrated School Inc</span>
+                <span class="school-name">Army's Angels Integrated School, INC.</span>
             </div>
         </div>
         <ul class="nav-links">

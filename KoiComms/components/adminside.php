@@ -12,7 +12,7 @@ if (isset($_SESSION['user_id']) && isset($_SESSION['user_role']) && $_SESSION['u
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Login - Army's Angels Integrated School Inc</title>
+    <title>Admin Login - Army's Angels Integrated School, INC.</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="../styles/styles.css"> 
@@ -45,7 +45,7 @@ if (isset($_SESSION['user_id']) && isset($_SESSION['user_role']) && $_SESSION['u
     <nav class="navbar">
         <div class="logo-container">
             <img src="../assets/logo.jpeg" alt="AAIS Logo" class="logo">
-            <div class="brand-text"><span class="school-name">Army's Angels Integrated School Inc</span></div>
+            <div class="brand-text"><span class="school-name">Army's Angels Integrated School, INC.</span></div>
         </div>
         <ul class="nav-links">
             <li><a href="homepage.html">Home</a></li>
