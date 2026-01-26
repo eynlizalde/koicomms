@@ -556,13 +556,13 @@ footer {
 }
 
 /* Responsive */
-@media (max-width: 768px) {
+/* @media (max-width: 768px) {
     .zigzag-row { flex-direction: column !important; }
     .hero-content h1 { font-size: 1.5rem; }
     .footer-wireframe-container { flex-direction: column; }
     .fw-flag { position: relative; top: 0; right: 0; margin-bottom: 20px; align-self: flex-start; }
     .fw-col-right .fw-row.right-align-content { padding-left: 0; }
-}
+} */
 
 .social-btn {
     display: inline-block;
@@ -586,6 +586,7 @@ footer {
 }
 
 /* --- RESPONSIVE --- */
+/*
 @media (max-width: 768px) {
     .navbar { flex-direction: column; gap: 15px; padding: 1rem; }
     .nav-links { flex-wrap: wrap; justify-content: center; gap: 15px; }
@@ -593,3 +594,4 @@ footer {
     .about-grid, .tracks-grid, .admissions-layout, .activities-grid { grid-template-columns: 1fr; }
     .songs-grid { grid-template-columns: 1fr; }
 }
+*/
