@@ -1,3 +1,8 @@
+<?php
+session_start();
+$isAdmin = (isset($_SESSION['user_role']) && $_SESSION['user_role'] === 'admin');
+// You might want to include database.php here if more complex admin checks are needed
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -154,6 +159,39 @@
         .content-card li {
             margin-bottom: 10px;
         }
+
+        /* NEW STYLES FOR EDIT ICONS */
+        .edit-icon {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: rgba(0, 0, 0, 0.6);
+            color: white;
+            padding: 5px 8px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: none; /* Hidden by default */
+            z-index: 10;
+        }
+        .edit-icon:hover {
+            background-color: rgba(0, 0, 0, 0.8);
+        }
+        .image-container-wrapper {
+            position: relative;
+            display: inline-block; /* To make position:absolute work relative to this */
+            width: 100%; /* Ensure it takes full width in grid */
+            height: 100%; /* Ensure it takes full height in grid */
+        }
+        .image-grid > .image-container-wrapper {
+            display: flex; /* For centering content in flexbox */
+            justify-content: center;
+            align-items: center;
+        }
+        .single-image-grid > .image-container-wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
     </style>
 </head>
 <body>
@@ -169,7 +207,7 @@
             <li><a href="homepage.html">Home</a></li>
             <li><a href="history.html">History</a></li>
             <li><a href="fees.html">Fees Information</a></li>
-            <li><a href="activities.html">School Activities</a></li>
+            <li><a href="activities.php">School Activities</a></li> <?php // Changed to .php ?>
             <li><a href="https://docs.google.com/forms/d/e/1FAIpQLSfgqKHwYmDm2FPWLBCyHL0awb6zPHps4rwwPDKNpnRU3maDSA/viewform" target="_blank">Enroll Now</a></li>
             <li><a href="#contact" class="btn-nav">Contact Us</a></li>
         </ul>
@@ -181,9 +219,24 @@
         <div class="event-section">
             <h2>Field Trip</h2>
             <div class="image-grid">
-                <img src="../assets/fieldtrip1.jpg" alt="Field Trip 1">
-                <img src="../assets/fieldtrip2.jpg" alt="Field Trip 2">
-                <img src="../assets/fieldtrip3.jpg" alt="Field Trip 3">
+                <div class="image-container-wrapper">
+                    <img src="../assets/fieldtrip1.jpg" alt="Field Trip 1" id="img_fieldtrip1">
+                    <?php if ($isAdmin): ?>
+                    <i class="fas fa-pencil-alt edit-icon" data-image-id="img_fieldtrip1" data-image-path="assets/fieldtrip1.jpg"></i>
+                    <?php endif; ?>
+                </div>
+                <div class="image-container-wrapper">
+                    <img src="../assets/fieldtrip2.jpg" alt="Field Trip 2" id="img_fieldtrip2">
+                    <?php if ($isAdmin): ?>
+                    <i class="fas fa-pencil-alt edit-icon" data-image-id="img_fieldtrip2" data-image-path="assets/fieldtrip2.jpg"></i>
+                    <?php endif; ?>
+                </div>
+                <div class="image-container-wrapper">
+                    <img src="../assets/fieldtrip3.jpg" alt="Field Trip 3" id="img_fieldtrip3">
+                    <?php if ($isAdmin): ?>
+                    <i class="fas fa-pencil-alt edit-icon" data-image-id="img_fieldtrip3" data-image-path="assets/fieldtrip3.jpg"></i>
+                    <?php endif; ?>
+                </div>
             </div>
             <p class="event-description">After a busy month, students enjoyed a relaxing day out, promoting both physical and mental well-being. The trip also included a visit to a museum, offering valuable educational insights.</p>
         </div>
@@ -191,12 +244,42 @@
         <div class="event-section">
             <h2>GPSOA and Foundation Celebration</h2>
             <div class="image-grid grid-3-col">
-                <img src="../assets/foundationday1.jpg" alt="Foundation Day 1">
-                <img src="../assets/foundationday2.jpg" alt="Foundation Day 2">
-                <img src="../assets/foundationday3.jpg" alt="Foundation Day 3">
-                <img src="../assets/foundationday4.jpg" alt="Foundation Day 4">
-                <img src="../assets/foundationday5.jpg" alt="Foundation Day 5">
-                <img src="../assets/foundationday6.jpg" alt="Foundation Day 6">
+                <div class="image-container-wrapper">
+                    <img src="../assets/foundationday1.jpg" alt="Foundation Day 1" id="img_foundationday1">
+                    <?php if ($isAdmin): ?>
+                    <i class="fas fa-pencil-alt edit-icon" data-image-id="img_foundationday1" data-image-path="assets/foundationday1.jpg"></i>
+                    <?php endif; ?>
+                </div>
+                <div class="image-container-wrapper">
+                    <img src="../assets/foundationday2.jpg" alt="Foundation Day 2" id="img_foundationday2">
+                    <?php if ($isAdmin): ?>
+                    <i class="fas fa-pencil-alt edit-icon" data-image-id="img_foundationday2" data-image-path="assets/foundationday2.jpg"></i>
+                    <?php endif; ?>
+                </div>
+                <div class="image-container-wrapper">
+                    <img src="../assets/foundationday3.jpg" alt="Foundation Day 3" id="img_foundationday3">
+                    <?php if ($isAdmin): ?>
+                    <i class="fas fa-pencil-alt edit-icon" data-image-id="img_foundationday3" data-image-path="assets/foundationday3.jpg"></i>
+                    <?php endif; ?>
+                </div>
+                <div class="image-container-wrapper">
+                    <img src="../assets/foundationday4.jpg" alt="Foundation Day 4" id="img_foundationday4">
+                    <?php if ($isAdmin): ?>
+                    <i class="fas fa-pencil-alt edit-icon" data-image-id="img_foundationday4" data-image-path="assets/foundationday4.jpg"></i>
+                    <?php endif; ?>
+                </div>
+                <div class="image-container-wrapper">
+                    <img src="../assets/foundationday5.jpg" alt="Foundation Day 5" id="img_foundationday5">
+                    <?php if ($isAdmin): ?>
+                    <i class="fas fa-pencil-alt edit-icon" data-image-id="img_foundationday5" data-image-path="assets/foundationday5.jpg"></i>
+                    <?php endif; ?>
+                </div>
+                <div class="image-container-wrapper">
+                    <img src="../assets/foundationday6.jpg" alt="Foundation Day 6" id="img_foundationday6">
+                    <?php if ($isAdmin): ?>
+                    <i class="fas fa-pencil-alt edit-icon" data-image-id="img_foundationday6" data-image-path="assets/foundationday6.jpg"></i>
+                    <?php endif; ?>
+                </div>
             </div>
             <p class="event-description">One of the most anticipated school events, GPSOA features exciting tournaments in sports like chess, volleyball, basketball, and majorette. Winners are recognized during the Foundation Celebration, which also includes a lively dance intermission.</p>
         </div>
@@ -204,7 +287,12 @@
         <div class="event-section">
             <h2>Recollection</h2>
             <div class="single-image-grid">
-                <img src="../assets/gospelrecoll1.jpg" alt="Recollection">
+                <div class="image-container-wrapper">
+                    <img src="../assets/gospelrecoll1.jpg" alt="Recollection" id="img_gospelrecoll1">
+                    <?php if ($isAdmin): ?>
+                    <i class="fas fa-pencil-alt edit-icon" data-image-id="img_gospelrecoll1" data-image-path="assets/gospelrecoll1.jpg"></i>
+                    <?php endif; ?>
+                </div>
             </div>
             <p class="event-description">Strengthening our connection with the Lord is a key mission of our school. Every year, students participate in a meaningful recollection at the chapel beside the school.</p>
         </div>
@@ -212,7 +300,12 @@
         <div class="event-section">
             <h2>Women’s Month Celebration</h2>
             <div class="single-image-grid">
-                <img src="../assets/womensceleb1.jpg" alt="Women's Month">
+                <div class="image-container-wrapper">
+                    <img src="../assets/womensceleb1.jpg" alt="Women's Month" id="img_womensceleb1">
+                    <?php if ($isAdmin): ?>
+                    <i class="fas fa-pencil-alt edit-icon" data-image-id="img_womensceleb1" data-image-path="assets/womensceleb1.jpg"></i>
+                    <?php endif; ?>
+                </div>
             </div>
             <p class="event-description">Honoring the achievements, strength, and contributions of women, a program is arranged to inspire students to appreciate and empower the women in their lives through meaningful reflections.</p>
         </div>
@@ -305,5 +398,86 @@
             &copy; 2025 Army's Angels Integrated School, Inc. All Rights Reserved.
         </div>
     </footer>
+
+    <script>
+        <?php if ($isAdmin): ?>
+        // Show edit icons for admin
+        document.querySelectorAll('.edit-icon').forEach(icon => {
+            icon.style.display = 'block';
+            icon.addEventListener('click', function() {
+                const imageId = this.dataset.imageId;
+                const imagePath = this.dataset.imagePath; // e.g., assets/fieldtrip1.jpg
+                
+                const fileInput = document.createElement('input');
+                fileInput.type = 'file';
+                fileInput.accept = 'image/*';
+                fileInput.onchange = async (e) => {
+                    if (e.target.files.length > 0) {
+                        const file = e.target.files[0];
+                        const formData = new FormData();
+                        formData.append('newImage', file);
+                        formData.append('imagePath', imagePath); // Send original path to identify which image to replace
+
+                        try {
+                            const response = await fetch('../php/upload_activity_image.php', {
+                                method: 'POST',
+                                body: formData
+                            });
+                            const result = await response.json();
+
+                            if (result.success) {
+                                document.getElementById(imageId).src = '../' + result.newPath + '?' + new Date().getTime(); // Append timestamp to bust cache
+                                alert('Image updated successfully!');
+                            } else {
+                                alert('Error updating image: ' + result.message);
+                            }
+                        } catch (error) {
+                            console.error('Error uploading image:', error);
+                            alert('An error occurred during image upload.');
+                        }
+                    }
+                };
+                fileInput.click();
+            });
+        });
+        <?php endif; ?>
+
+        // Accordion Script (existing)
+        var acc = document.getElementsByClassName("accordion");
+        for (var i = 0; i < acc.length; i++) {
+            acc[i].addEventListener("click", function() {
+                this.classList.toggle("active");
+                var panel = this.nextElementSibling;
+                var icon = this.querySelector('.fa-chevron-down');
+                
+                if (panel.style.maxHeight) {
+                    panel.style.maxHeight = null;
+                    if(icon) icon.style.transform = "rotate(0deg)";
+                } else {
+                    panel.style.maxHeight = panel.scrollHeight + "px";
+                    if(icon) icon.style.transform = "rotate(180deg)";
+                }
+            });
+        }
+        
+        // Hero Section Mousemove Effect (existing)
+        const heroSection = document.getElementById('hero-section');
+        const heroBg = document.getElementById('hero-bg');
+        const heroContent = document.getElementById('hero-content');
+
+        if (heroSection && heroBg && heroContent) { // Check if elements exist before adding listener
+            heroSection.addEventListener('mousemove', (e) => {
+                const x = e.clientX / window.innerWidth;
+                const y = e.clientY / window.innerHeight;
+                const bgX = -x * 30; 
+                const bgY = -y * 30;
+                const contentX = x * 10;
+                const contentY = y * 10;
+
+                heroBg.style.transform = `translate(${bgX}px, ${bgY}px) scale(1.05)`;
+                heroContent.style.transform = `translate(${contentX}px, ${contentY}px)`;
+            });
+        }
+    </script>
 </body>
 </html>

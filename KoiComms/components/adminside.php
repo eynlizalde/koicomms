@@ -49,7 +49,7 @@ if (isset($_SESSION['user_id']) && isset($_SESSION['user_role']) && $_SESSION['u
         </div>
         <ul class="nav-links">
             <li><a href="homepage.html">Home</a></li>
-            <li><a href="enrolleeside.php">School Portal</a></li>
+            <li><a href="https://docs.google.com/forms/d/e/1FAIpQLSfgqKHwYmDm2FPWLBCyHL0awb6zPHps4rwwPDKNpnRU3maDSA/viewform" target="_blank">Enroll Now</a></li>
         </ul>
     </nav>
 
@@ -76,9 +76,12 @@ if (isset($_SESSION['user_id']) && isset($_SESSION['user_role']) && $_SESSION['u
                     <?php
                     if (isset($_GET['error'])) {
                         echo htmlspecialchars($_GET['error']);
+                    } else if (isset($_GET['message'])) { // Display general messages too
+                        echo htmlspecialchars($_GET['message']);
                     }
                     ?>
                 </p>
+                <!-- <a href="forgot_password.php" style="text-align: center; color: white; font-size: 0.9em; margin-top: 10px; display: block;">Forgot Password?</a> -->
             </form>
         </div>
     </header>

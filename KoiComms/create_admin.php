@@ -3,8 +3,8 @@ include 'php/database.php';
 
 // --- Admin User Details ---
 $name = 'Admin';
-$email = 'aais@gmail.com';
-$password = '1998characaboveallarmysangelsinc';
+$email = 'armysangelsw@gmail.com';
+$password = 'webAAISinc';
 $role = 'admin';
 // --------------------------
 

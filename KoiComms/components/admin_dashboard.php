@@ -55,7 +55,7 @@ $adminName = isset($_SESSION['user_name']) ? htmlspecialchars($_SESSION['user_na
                 <a href="enrollees.php" class="dash-btn">View Enrollees</a>
                 <a href="fees.html" class="dash-btn">Information on Fees</a>
                 <a href="history.html" class="dash-btn">History</a>
-                <a href="activities.html" class="dash-btn">School Activities</a>
+                <a href="activities.php" class="dash-btn">School Activities</a>
             </div>
         </div>
     </div>

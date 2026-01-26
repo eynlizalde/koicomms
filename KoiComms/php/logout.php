@@ -2,6 +2,6 @@
 session_start();
 session_unset();
 session_destroy();
-header("Location: ../components/enrolleeside.php");
+header("Location: ../components/homepage.html");
 exit();
 ?>
