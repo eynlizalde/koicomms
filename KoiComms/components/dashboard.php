@@ -1,13 +1,11 @@
 <?php
 session_start();
 
-// If user is not logged in, redirect to login page
 if (!isset($_SESSION['user_id'])) {
     header('Location: enrolleeside.php');
     exit;
 }
 
-// Include database connection to check for existing ID
 include '../php/database.php';
 $userId = $_SESSION['user_id'];
 $existingEnrollmentId = null;
@@ -95,7 +93,6 @@ $formUrl = "https://docs.google.com/forms/d/e/1FAIpQLSfgqKHwYmDm2FPWLBCyHL0awb6z
     </div>
 
     <footer id="contact">
-        <!-- Footer content can be added back if needed -->
     </footer>
 
     <script>
@@ -104,27 +101,21 @@ $formUrl = "https://docs.google.com/forms/d/e/1FAIpQLSfgqKHwYmDm2FPWLBCyHL0awb6z
         const formUrl = '<?php echo $formUrl; ?>';
         const enrollmentContainer = document.getElementById('enrollment-container');
 
-        // When "Apply Now" is clicked, mark that the user has visited the form
         if (applyBtn) {
             applyBtn.addEventListener('click', function() {
                 sessionStorage.setItem('formVisited', 'true');
             });
         }
 
-        // When the user comes back to this page, check if they visited the form
         if (sessionStorage.getItem('formVisited') === 'true') {
-            // Use a small timeout to let the user see the page before the prompt
             setTimeout(() => {
                 const isFinished = confirm("Have you finished filling out the enrollment form?");
                 
                 if (isFinished) {
-                    // User confirmed, generate the ID
                     generateEnrollmentId();
                 } else {
-                    // User has not finished, send them back to the form
                     window.location.href = formUrl;
                 }
-                // Clear the flag
                 sessionStorage.removeItem('formVisited');
             }, 500);
         }

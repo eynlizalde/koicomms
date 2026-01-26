@@ -1,7 +1,6 @@
 <?php
 session_start();
 
-// If user is not logged in or is not an admin, redirect to admin login page
 if (!isset($_SESSION['user_id']) || !isset($_SESSION['user_role']) || $_SESSION['user_role'] !== 'admin') {
     header('Location: adminside.php?error=Please log in as an admin to view this page.');
     exit;

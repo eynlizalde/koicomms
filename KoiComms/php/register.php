@@ -11,7 +11,6 @@ if ($password !== $retype_password) {
     exit();
 }
 
-// Check if email already exists
 $sql = "SELECT email FROM users WHERE email = ?";
 $stmt = $conn->prepare($sql);
 $stmt->bind_param("s", $email);

@@ -7,7 +7,6 @@ $message = '';
 if (empty($token)) {
     $message = 'No reset token provided.';
 } else {
-    // Check if token exists and is valid/not expired
     $sql = "SELECT id, reset_token_expires_at FROM users WHERE reset_token = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("s", $token);
@@ -34,7 +33,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && empty($message)) {
     } elseif ($newPassword !== $confirmPassword) {
         $message = 'Passwords do not match.';
     } else {
-        // Update password and clear token
         $hashedPassword = password_hash($newPassword, PASSWORD_DEFAULT);
         $sql = "UPDATE users SET password = ?, reset_token = NULL, reset_token_expires_at = NULL WHERE reset_token = ?";
         $stmt = $conn->prepare($sql);
@@ -42,7 +40,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && empty($message)) {
 
         if ($stmt->execute()) {
             $message = 'Your password has been successfully reset. You can now log in.';
-            // Optionally redirect to login page after successful reset
             header("Location: adminside.html?message=" . urlencode($message));
             exit();
         } else {

@@ -1,7 +1,6 @@
 <?php
 session_start();
 $isAdmin = (isset($_SESSION['user_role']) && $_SESSION['user_role'] === 'admin');
-// You might want to include database.php here if more complex admin checks are needed
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -87,14 +86,14 @@ $isAdmin = (isset($_SESSION['user_role']) && $_SESSION['user_role'] === 'admin')
 
         .single-image-grid {
             display: grid;
-            justify-content: center; /* Center the grid item */
+            justify-content: center; 
             margin-bottom: 20px;
         }
 
         .single-image-grid img {
-            max-width: 600px; /* Limit the max width of single images */
+            max-width: 600px; 
             width: 100%;
-            border-radius: 0; /* Squared corners */
+            border-radius: 0; 
             transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
 
@@ -160,7 +159,6 @@ $isAdmin = (isset($_SESSION['user_role']) && $_SESSION['user_role'] === 'admin')
             margin-bottom: 10px;
         }
 
-        /* NEW STYLES FOR EDIT ICONS */
         .edit-icon {
             position: absolute;
             top: 10px;
@@ -170,7 +168,7 @@ $isAdmin = (isset($_SESSION['user_role']) && $_SESSION['user_role'] === 'admin')
             padding: 5px 8px;
             border-radius: 50%;
             cursor: pointer;
-            display: none; /* Hidden by default */
+            display: none; 
             z-index: 10;
         }
         .edit-icon:hover {
@@ -178,12 +176,12 @@ $isAdmin = (isset($_SESSION['user_role']) && $_SESSION['user_role'] === 'admin')
         }
         .image-container-wrapper {
             position: relative;
-            display: inline-block; /* To make position:absolute work relative to this */
-            width: 100%; /* Ensure it takes full width in grid */
-            height: 100%; /* Ensure it takes full height in grid */
+            display: inline-block; 
+            width: 100%; 
+            height: 100%; 
         }
         .image-grid > .image-container-wrapper {
-            display: flex; /* For centering content in flexbox */
+            display: flex; 
             justify-content: center;
             align-items: center;
         }
@@ -207,7 +205,7 @@ $isAdmin = (isset($_SESSION['user_role']) && $_SESSION['user_role'] === 'admin')
             <li><a href="homepage.html">Home</a></li>
             <li><a href="history.html">History</a></li>
             <li><a href="fees.html">Fees Information</a></li>
-            <li><a href="activities.php">School Activities</a></li> <?php // Changed to .php ?>
+            <li><a href="activities.php">School Activities</a></li>
             <li><a href="https://docs.google.com/forms/d/e/1FAIpQLSfgqKHwYmDm2FPWLBCyHL0awb6zPHps4rwwPDKNpnRU3maDSA/viewform" target="_blank">Enroll Now</a></li>
             <li><a href="#contact" class="btn-nav">Contact Us</a></li>
         </ul>
@@ -406,7 +404,7 @@ $isAdmin = (isset($_SESSION['user_role']) && $_SESSION['user_role'] === 'admin')
             icon.style.display = 'block';
             icon.addEventListener('click', function() {
                 const imageId = this.dataset.imageId;
-                const imagePath = this.dataset.imagePath; // e.g., assets/fieldtrip1.jpg
+                const imagePath = this.dataset.imagePath; 
                 
                 const fileInput = document.createElement('input');
                 fileInput.type = 'file';
@@ -416,7 +414,7 @@ $isAdmin = (isset($_SESSION['user_role']) && $_SESSION['user_role'] === 'admin')
                         const file = e.target.files[0];
                         const formData = new FormData();
                         formData.append('newImage', file);
-                        formData.append('imagePath', imagePath); // Send original path to identify which image to replace
+                        formData.append('imagePath', imagePath); 
 
                         try {
                             const response = await fetch('../php/upload_activity_image.php', {
@@ -442,7 +440,6 @@ $isAdmin = (isset($_SESSION['user_role']) && $_SESSION['user_role'] === 'admin')
         });
         <?php endif; ?>
 
-        // Accordion Script (existing)
         var acc = document.getElementsByClassName("accordion");
         for (var i = 0; i < acc.length; i++) {
             acc[i].addEventListener("click", function() {
@@ -460,12 +457,11 @@ $isAdmin = (isset($_SESSION['user_role']) && $_SESSION['user_role'] === 'admin')
             });
         }
         
-        // Hero Section Mousemove Effect (existing)
         const heroSection = document.getElementById('hero-section');
         const heroBg = document.getElementById('hero-bg');
         const heroContent = document.getElementById('hero-content');
 
-        if (heroSection && heroBg && heroContent) { // Check if elements exist before adding listener
+        if (heroSection && heroBg && heroContent) { 
             heroSection.addEventListener('mousemove', (e) => {
                 const x = e.clientX / window.innerWidth;
                 const y = e.clientY / window.innerHeight;

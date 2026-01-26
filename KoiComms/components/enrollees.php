@@ -1,7 +1,6 @@
 <?php
 session_start();
 
-// If user is not logged in or is not an admin, redirect to admin login page
 if (!isset($_SESSION['user_id']) || !isset($_SESSION['user_role']) || $_SESSION['user_role'] !== 'admin') {
     header('Location: adminside.php?error=Please log in as an admin to view this page.');
     exit;
@@ -9,7 +8,6 @@ if (!isset($_SESSION['user_id']) || !isset($_SESSION['user_role']) || $_SESSION[
 
 include '../php/database.php';
 
-// Fetch all users who have an enrollment ID
 $sql = "SELECT id, name, email, enrollment_id FROM users WHERE enrollment_id IS NOT NULL ORDER BY reg_date DESC";
 $result = $conn->query($sql);
 

@@ -20,7 +20,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if ($result->num_rows == 1) {
         $user = $result->fetch_assoc();
         
-        // Verify password AND check role
         if (password_verify($password, $user['password']) && $user['role'] === 'admin') {
             $_SESSION['user_id'] = $user['id'];
             $_SESSION['user_name'] = $user['name'];
@@ -28,7 +27,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             header("Location: ../components/admin_dashboard.php");
             exit();
         } else {
-            // Error for wrong password OR not being an admin
             header("Location: ../components/adminside.php?error=Invalid credentials or not an admin.");
             exit();
         }

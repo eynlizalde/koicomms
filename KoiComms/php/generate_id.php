@@ -2,7 +2,6 @@
 session_start();
 include 'database.php';
 
-// Ensure user is logged in
 if (!isset($_SESSION['user_id'])) {
     http_response_code(403);
     echo json_encode(['error' => 'User not authenticated']);
@@ -11,7 +10,6 @@ if (!isset($_SESSION['user_id'])) {
 
 $userId = $_SESSION['user_id'];
 
-// Check if an ID already exists to prevent overwriting
 $sql_check = "SELECT enrollment_id FROM users WHERE id = ?";
 $stmt_check = $conn->prepare($sql_check);
 $stmt_check->bind_param("i", $userId);
@@ -24,10 +22,8 @@ if ($user['enrollment_id']) {
     exit;
 }
 
-// Generate a unique ID
 $enrollmentId = "AAIS-" . date("Y") . "-" . strtoupper(uniqid());
 
-// Update the user's record with the new ID
 $sql_update = "UPDATE users SET enrollment_id = ? WHERE id = ?";
 $stmt_update = $conn->prepare($sql_update);
 $stmt_update->bind_param("si", $enrollmentId, $userId);

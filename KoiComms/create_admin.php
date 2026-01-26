@@ -1,17 +1,13 @@
 <?php
 include 'php/database.php';
 
-// --- Admin User Details ---
 $name = 'Admin';
 $email = 'armysangelsw@gmail.com';
 $password = 'webAAISinc';
 $role = 'admin';
-// --------------------------
 
-// Securely hash the password
 $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
-// Check if email already exists
 $sql_check = "SELECT email FROM users WHERE email = ?";
 $stmt_check = $conn->prepare($sql_check);
 $stmt_check->bind_param("s", $email);
@@ -24,7 +20,6 @@ if ($result->num_rows > 0) {
 }
 $stmt_check->close();
 
-// Insert the new admin user
 $sql_insert = "INSERT INTO users (name, email, password, role) VALUES (?, ?, ?, ?)";
 $stmt_insert = $conn->prepare($sql_insert);
 $stmt_insert->bind_param("ssss", $name, $email, $hashed_password, $role);

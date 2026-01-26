@@ -1,7 +1,6 @@
 <?php
 session_start();
 
-// If an admin is already logged in, redirect to the admin dashboard
 if (isset($_SESSION['user_id']) && isset($_SESSION['user_role']) && $_SESSION['user_role'] === 'admin') {
     header('Location: admin_dashboard.php');
     exit;
@@ -81,7 +80,6 @@ if (isset($_SESSION['user_id']) && isset($_SESSION['user_role']) && $_SESSION['u
                     }
                     ?>
                 </p>
-                <!-- <a href="forgot_password.php" style="text-align: center; color: white; font-size: 0.9em; margin-top: 10px; display: block;">Forgot Password?</a> -->
             </form>
         </div>
     </header>
