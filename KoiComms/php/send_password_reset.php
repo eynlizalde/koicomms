@@ -1,15 +1,45 @@
 <?php
 include 'database.php';
-require 'smtp_config.php'; // Include the new SMTP config file
+
+// Manually require the necessary files for phpdotenv
+// This is required because we are not using Composer's autoloader
+require_once __DIR__ . '/../php/DotEnv/src/Exception/ExceptionInterface.php';
+require_once __DIR__ . '/../php/DotEnv/src/Exception/InvalidPathException.php';
+require_once __DIR__ . '/../php/DotEnv/src/Loader/LoaderInterface.php';
+require_once __DIR__ . '/../php/DotEnv/src/Loader/Loader.php';
+require_once __DIR__ . '/../php/DotEnv/src/Store/StoreInterface.php';
+require_once __DIR__ . '/../php/DotEnv/src/Store/File/Reader.php';
+require_once __DIR__ . '/../php/DotEnv/src/Store/StoreBuilder.php';
+require_once __DIR__ . '/../php/DotEnv/src/Parser/Entry.php';
+require_once __DIR__ . '/../php/DotEnv/src/Parser/ParserInterface.php';
+require_once __DIR__ . '/../php/DotEnv/src/Parser/Parser.php';
+require_once __DIR__ . '/../php/DotEnv/src/Parser/Value.php';
+require_once __DIR__ . '/../php/DotEnv/src/Repository/RepositoryInterface.php';
+require_once __DIR__ . '/../php/DotEnv/src/Repository/Adapter/AdapterInterface.php';
+require_once __DIR__ . '/../php/DotEnv/src/Repository/Adapter/ServerConstAdapter.php';
+require_once __DIR__ . '/../php/DotEnv/src/Repository/Adapter/EnvConstAdapter.php';
+require_once __DIR__ . '/../php/DotEnv/src/Repository/Adapter/PutenvAdapter.php';
+require_once __DIR__ . '/../php/DotEnv/src/Repository/RepositoryBuilder.php';
+require_once __DIR__ . '/../php/DotEnv/src/Validator.php';
+require_once __DIR__ . '/../php/DotEnv/src/Dotenv.php';
 
 // Include PHPMailer classes
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
+use Dotenv\Dotenv;
 
 require '../php/PHPMailer/src/Exception.php';
 require '../php/PHPMailer/src/PHPMailer.php';
 require '../php/PHPMailer/src/SMTP.php';
+
+// Load environment variables from the .env file in the project root
+try {
+    $dotenv = Dotenv::createImmutable(__DIR__ . '/..'); // Go up one directory to the project root
+    $dotenv->load();
+} catch (\Dotenv\Exception\InvalidPathException $e) {
+    die("Error: Could not find the .env file. Please ensure it exists in the project root directory and is readable.");
+}
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = $_POST['email'] ?? '';
@@ -47,7 +77,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $stmt->bind_param("ssi", $token, $expires, $userId);
 
     if ($stmt->execute()) {
-        // Send email using PHPMailer
         $resetLink = "http://" . $_SERVER['HTTP_HOST'] . "/koicomms/KoiComms/components/reset_password.php?token=" . $token;
         $subject = "Password Reset Request";
         $body = "Dear Admin,\n\n"
@@ -61,18 +90,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $mail = new PHPMailer(true);
 
         try {
-            // Server settings from smtp_config.php
-            $mail->SMTPDebug = SMTP::DEBUG_SERVER;
+            // Server settings from Environment Variables
+            // $mail->SMTPDebug = SMTP::DEBUG_SERVER; // Uncomment for detailed debug output
             $mail->isSMTP();
-            $mail->Host       = SMTP_HOST;
+            $mail->Host       = $_ENV['SMTP_HOST'];
             $mail->SMTPAuth   = true;
-            $mail->Username   = SMTP_USERNAME;
-            $mail->Password   = SMTP_PASSWORD;
-            $mail->SMTPSecure = SMTP_SECURE;
-            $mail->Port       = SMTP_PORT;
+            $mail->Username   = $_ENV['SMTP_USERNAME'];
+            $mail->Password   = $_ENV['SMTP_PASSWORD'];
+            $mail->SMTPSecure = $_ENV['SMTP_SECURE'];
+            $mail->Port       = (int)$_ENV['SMTP_PORT']; // Port should be an integer
 
             // Recipients
-            $mail->setFrom(SMTP_FROM_EMAIL, SMTP_FROM_NAME);
+            $mail->setFrom($_ENV['SMTP_FROM_EMAIL'], $_ENV['SMTP_FROM_NAME']);
             $mail->addAddress($email);
 
             // Content
@@ -86,19 +115,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             exit();
 
         } catch (Exception $e) {
-            echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
+            // For security, do not show detailed error in production
+            // Log the error instead: error_log("Mailer Error: " . $mail->ErrorInfo);
+            $message = "Message could not be sent. Please check your SMTP credentials in the .env file and contact the administrator."; 
+            header("Location: ../components/forgot_password.php?error=" . urlencode($message));
             exit();
         }
     } else {
         $message = "Error generating reset link. Please try again later.";
-        header("Location: ../components/forgot_password.php?message=" . urlencode($message));
+        header("Location: ../components/forgot_password.php?error=" . urlencode($message));
         exit();
     }
-
-    $stmt->close();
-    $conn->close();
-    header("Location: ../components/forgot_password.php?message=" . urlencode($message));
-    exit();
 } else {
     header("Location: ../components/forgot_password.php");
     exit();
