@@ -2,6 +2,6 @@
 session_start();
 session_unset();
 session_destroy();
-header("Location: ../components/homepage.html");
+header("Location: ../components/homepage.php");
 exit();
 ?>

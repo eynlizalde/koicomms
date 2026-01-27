@@ -40,7 +40,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && empty($message)) {
 
         if ($stmt->execute()) {
             $message = 'Your password has been successfully reset. You can now log in.';
-            header("Location: adminside.html?message=" . urlencode($message));
+            header("Location: adminside.php?message=" . urlencode($message));
             exit();
         } else {
             $message = 'Error resetting password: ' . $conn->error;
@@ -145,7 +145,7 @@ $conn->close();
                 <button type="submit" class="btn-submit">Reset Password</button>
             </form>
         <?php endif; ?>
-        <p style="margin-top: 20px;"><a href="adminside.html" style="color: var(--medium-green);">Back to Login</a></p>
+        <p style="margin-top: 20px;"><a href="adminside.php" style="color: var(--medium-green);">Back to Login</a></p>
     </div>
 </body>
 </html>

@@ -1,3 +1,15 @@
+<?php
+include '../php/database.php';
+
+// Fetch the current enrollment URL
+$enrollment_url = '#'; // Default fallback URL
+$sql = "SELECT setting_value FROM settings WHERE setting_name = 'enrollment_url'";
+$result = $conn->query($sql);
+if ($result && $result->num_rows > 0) {
+    $row = $result->fetch_assoc();
+    $enrollment_url = $row['setting_value'];
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -21,11 +33,11 @@
             </div>
         </div>
         <ul class="nav-links">
-            <li><a href="homepage.html">Home</a></li>
-            <li><a href="history.html">History</a></li>
-            <li><a href="fees.html">Fees Information</a></li>
+            <li><a href="homepage.php">Home</a></li>
+            <li><a href="history.php">History</a></li>
+            <li><a href="fees.php">Fees Information</a></li>
             <li><a href="activities.php">School Activities</a></li>
-            <li><a href="https://docs.google.com/forms/d/e/1FAIpQLSfgqKHwYmDm2FPWLBCyHL0awb6zPHps4rwwPDKNpnRU3maDSA/viewform" target="_blank">Enroll Now</a></li>
+            <li><a href="<?php echo htmlspecialchars($enrollment_url); ?>" target="_blank">Enroll Now</a></li>
             <li><a href="#contact" class="btn-nav">Contact Us</a></li>
         </ul>
     </nav>
@@ -36,7 +48,7 @@
             <h1>Army's Angels Integrated Schools, INC.</h1>
             <p>Character Above All</p>
             <div class="hero-buttons">
-                <a href="https://docs.google.com/forms/d/e/1FAIpQLSfgqKHwYmDm2FPWLBCyHL0awb6zPHps4rwwPDKNpnRU3maDSA/viewform" target="_blank"
+                <a href="<?php echo htmlspecialchars($enrollment_url); ?>" target="_blank"
                     class="btn-primary">Apply Now</a>
                 <a href="#tracks" class="btn-secondary">Explore Tracks</a>
                 <a href="adminside.php" class="btn-secondary">Admin Login</a>

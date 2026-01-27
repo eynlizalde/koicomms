@@ -1,3 +1,15 @@
+<?php
+include '../php/database.php';
+
+// Fetch the current enrollment URL
+$enrollment_url = '#'; // Default fallback URL
+$sql_url = "SELECT setting_value FROM settings WHERE setting_name = 'enrollment_url'";
+$result_url = $conn->query($sql_url);
+if ($result_url && $result_url->num_rows > 0) {
+    $row_url = $result_url->fetch_assoc();
+    $enrollment_url = $row_url['setting_value'];
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -86,8 +98,7 @@
             position: -webkit-sticky; 
             position: sticky;
             top: -35px; 
-            background: rgba(255, 255, 255, 0.9);
-            backdrop-filter: blur(12px);
+            background: #FFFFFF;
             padding-top: 20px;
             padding-bottom: 20px;
             margin-top: -35px; 
@@ -156,11 +167,11 @@
             </div>
         </div>
         <ul class="nav-links">
-            <li><a href="homepage.html">Home</a></li>
-            <li><a href="history.html">History</a></li>
-            <li><a href="fees.html">Fees Information</a></li>
+            <li><a href="homepage.php">Home</a></li>
+            <li><a href="history.php">History</a></li>
+            <li><a href="fees.php">Fees Information</a></li>
             <li><a href="activities.php">School Activities</a></li>
-            <li><a href="https://docs.google.com/forms/d/e/1FAIpQLSfgqKHwYmDm2FPWLBCyHL0awb6zPHps4rwwPDKNpnRU3maDSA/viewform" target="_blank">Enroll Now</a></li>
+            <li><a href="<?php echo htmlspecialchars($enrollment_url); ?>" target="_blank">Enroll Now</a></li>
             <li><a href="#contact" class="btn-nav">Contact Us</a></li>
         </ul>
     </nav>

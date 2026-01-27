@@ -87,7 +87,7 @@
                 <?php echo htmlspecialchars($_GET['message']); ?>
             </p>
         <?php endif; ?>
-        <p style="margin-top: 20px;"><a href="adminside.html" style="color: var(--medium-green);">Back to Login</a></p>
+        <p style="margin-top: 20px;"><a href="adminside.php" style="color: var(--medium-green);">Back to Login</a></p>
     </div>
 </body>
 </html>

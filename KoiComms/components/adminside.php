@@ -1,9 +1,20 @@
 <?php
 session_start();
+include '../php/database.php';
 
+// If an admin is already logged in, redirect to the admin dashboard
 if (isset($_SESSION['user_id']) && isset($_SESSION['user_role']) && $_SESSION['user_role'] === 'admin') {
     header('Location: admin_dashboard.php');
     exit;
+}
+
+// Fetch the current enrollment URL
+$enrollment_url = '#'; // Default fallback URL
+$sql_url = "SELECT setting_value FROM settings WHERE setting_name = 'enrollment_url'";
+$result_url = $conn->query($sql_url);
+if ($result_url && $result_url->num_rows > 0) {
+    $row_url = $result_url->fetch_assoc();
+    $enrollment_url = $row_url['setting_value'];
 }
 ?>
 <!DOCTYPE html>
@@ -47,8 +58,8 @@ if (isset($_SESSION['user_id']) && isset($_SESSION['user_role']) && $_SESSION['u
             <div class="brand-text"><span class="school-name">Army's Angels Integrated School, INC.</span></div>
         </div>
         <ul class="nav-links">
-            <li><a href="homepage.html">Home</a></li>
-            <li><a href="https://docs.google.com/forms/d/e/1FAIpQLSfgqKHwYmDm2FPWLBCyHL0awb6zPHps4rwwPDKNpnRU3maDSA/viewform" target="_blank">Enroll Now</a></li>
+            <li><a href="homepage.php">Home</a></li>
+            <li><a href="<?php echo htmlspecialchars($enrollment_url); ?>" target="_blank">Enroll Now</a></li>
         </ul>
     </nav>
 
@@ -80,7 +91,11 @@ if (isset($_SESSION['user_id']) && isset($_SESSION['user_role']) && $_SESSION['u
                     }
                     ?>
                 </p>
+                <div style="text-align: center; margin-top: 15px;">
+                    <a href="forgot_password.php" style="color: white; font-size: 0.9em;">Forgot Password?</a>
+                </div>
             </form>
+            <a href="homepage.php" style="color: white; text-decoration: underline; margin-top: 20px;">&larr; Back to Home</a>
         </div>
     </header>
 
