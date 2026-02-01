@@ -57,7 +57,33 @@ function render_content($page, $section, $default, $is_admin, $is_html = false) 
         body::before { width: 300px; height: 300px; top: -50px; left: -50px; }
         body::after { width: 400px; height: 400px; bottom: 0px; right: -50px; animation-delay: 4s; }
         .main-wrapper { padding: 120px 20px 80px 20px; width: 100%; max-width: 1400px; margin: 0 auto; display: flex; flex-direction: column; gap: 30px; flex-grow: 1; }
-        .content-card, .event-section { background: white; border-radius: 15px; padding: 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); margin-bottom: 30px; }
+        .event-section { position: relative; background: white; border-radius: 15px; padding: 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); margin-bottom: 30px; }
+        .delete-section-btn {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background-color: #e74c3c;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 28px;
+            height: 28px;
+            cursor: pointer;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10;
+            font-size: 1.2rem;
+            line-height: 1;
+            padding: 0;
+            padding-bottom: 3px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            transition: background-color 0.2s;
+        }
+        .delete-section-btn:hover {
+            background-color: #c0392b;
+        }
         .event-section h2 { font-size: 2rem; color: #27ae60; text-align: center; margin-bottom: 20px; }
         .image-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px; margin-bottom: 20px; }
         .image-grid.grid-3-col { grid-template-columns: repeat(3, 1fr); }
@@ -87,6 +113,26 @@ function render_content($page, $section, $default, $is_admin, $is_html = false) 
         #save-edit-btn { background-color: var(--bright-green); color: white; }
         #cancel-edit-btn { background-color: #ccc; }
         .edit-icon { position: absolute; top: 10px; right: 10px; background-color: rgba(0, 0, 0, 0.6); color: white; padding: 5px 8px; border-radius: 50%; cursor: pointer; display: none; z-index: 10; }
+        #save-activities-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            background-color: #ffc107;
+            color: black;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            z-index: 1500;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+            display: none; /* Initially hidden */
+            transition: transform 0.2s ease-out;
+        }
+        #save-activities-btn:hover {
+            transform: scale(1.05);
+        }
     </style>
 </head>
 <body>
@@ -109,77 +155,107 @@ function render_content($page, $section, $default, $is_admin, $is_html = false) 
     </nav>
 
     <div class="main-wrapper">
+        <?php if ($isAdmin): ?>
+        <div style="text-align: center; margin-bottom: 30px;">
+            <button id="add-section-btn" style="padding: 12px 25px; font-size: 1.1rem; cursor: pointer; background-color: #27ae60; color: white; border: none; border-radius: 8px; box-shadow: 0 5px 15px rgba(0,0,0,0.2);">Add New Section</button>
+        </div>
+        <?php endif; ?>
         <p style="color: white; text-align: center; font-size: 1.1rem; max-width: 800px; margin: 0 auto 30px auto;"><?php render_content('activities', 'page_intro', 'Default intro text.', $isAdmin); ?></p>
         
-        <div class="event-section">
-            <h2><?php render_content('activities', 'fieldtrip_title', 'Field Trip', $isAdmin); ?></h2>
-            <div class="image-grid">
-                <div class="image-container-wrapper">
-                    <img src="../assets/fieldtrip1.jpg" alt="Field Trip 1" id="img_fieldtrip1">
-                    <?php if ($isAdmin): ?><i class="fas fa-pencil-alt edit-icon" data-image-id="img_fieldtrip1" data-image-path="assets/fieldtrip1.jpg"></i><?php endif; ?>
-                </div>
-                <div class="image-container-wrapper">
-                    <img src="../assets/fieldtrip2.jpg" alt="Field Trip 2" id="img_fieldtrip2">
-                    <?php if ($isAdmin): ?><i class="fas fa-pencil-alt edit-icon" data-image-id="img_fieldtrip2" data-image-path="assets/fieldtrip2.jpg"></i><?php endif; ?>
-                </div>
-                <div class="image-container-wrapper">
-                    <img src="../assets/fieldtrip3.jpg" alt="Field Trip 3" id="img_fieldtrip3">
-                    <?php if ($isAdmin): ?><i class="fas fa-pencil-alt edit-icon" data-image-id="img_fieldtrip3" data-image-path="assets/fieldtrip3.jpg"></i><?php endif; ?>
-                </div>
-            </div>
-            <div class="event-description"><?php render_content('activities', 'fieldtrip_desc', 'Default field trip description.', $isAdmin); ?></div>
-        </div>
+        <?php
+        // --- DYNAMICALLY RENDER ALL EVENT SECTIONS ---
 
-        <div class="event-section">
-            <h2><?php render_content('activities', 'gpsoa_title', 'GPSOA and Foundation Celebration', $isAdmin); ?></h2>
-            <div class="image-grid grid-3-col">
-                <div class="image-container-wrapper"><img src="../assets/foundationday1.jpg" alt="Foundation Day 1" id="img_foundationday1"><?php if ($isAdmin): ?><i class="fas fa-pencil-alt edit-icon" data-image-id="img_foundationday1" data-image-path="assets/foundationday1.jpg"></i><?php endif; ?></div>
-                <div class="image-container-wrapper"><img src="../assets/foundationday2.jpg" alt="Foundation Day 2" id="img_foundationday2"><?php if ($isAdmin): ?><i class="fas fa-pencil-alt edit-icon" data-image-id="img_foundationday2" data-image-path="assets/foundationday2.jpg"></i><?php endif; ?></div>
-                <div class="image-container-wrapper"><img src="../assets/foundationday3.jpg" alt="Foundation Day 3" id="img_foundationday3"><?php if ($isAdmin): ?><i class="fas fa-pencil-alt edit-icon" data-image-id="img_foundationday3" data-image-path="assets/foundationday3.jpg"></i><?php endif; ?></div>
-                <div class="image-container-wrapper"><img src="../assets/foundationday4.jpg" alt="Foundation Day 4" id="img_foundationday4"><?php if ($isAdmin): ?><i class="fas fa-pencil-alt edit-icon" data-image-id="img_foundationday4" data-image-path="assets/foundationday4.jpg"></i><?php endif; ?></div>
-                <div class="image-container-wrapper"><img src="../assets/foundationday5.jpg" alt="Foundation Day 5" id="img_foundationday5"><?php if ($isAdmin): ?><i class="fas fa-pencil-alt edit-icon" data-image-id="img_foundationday5" data-image-path="assets/foundationday5.jpg"></i><?php endif; ?></div>
-                <div class="image-container-wrapper"><img src="../assets/foundationday6.jpg" alt="Foundation Day 6" id="img_foundationday6"><?php if ($isAdmin): ?><i class="fas fa-pencil-alt edit-icon" data-image-id="img_foundationday6" data-image-path="assets/foundationday6.jpg"></i><?php endif; ?></div>
-            </div>
-            <div class="event-description"><?php render_content('activities', 'gpsoa_desc', 'Default GPSOA description.', $isAdmin); ?></div>
-        </div>
+        // Define the order and layouts for the original, default sections
+        $default_section_keys = ['fieldtrip', 'gpsoa', 'recollection', 'womens_month'];
+        $section_layouts = [
+            'gpsoa' => 'image-grid grid-3-col',
+            'recollection' => 'single-image-grid',
+            'womens_month' => 'single-image-grid'
+        ];
 
-        <div class="event-section">
-            <h2><?php render_content('activities', 'recollection_title', 'Recollection', $isAdmin); ?></h2>
-            <div class="single-image-grid">
-                <div class="image-container-wrapper"><img src="../assets/gospelrecoll1.jpg" alt="Recollection" id="img_gospelrecoll1"><?php if ($isAdmin): ?><i class="fas fa-pencil-alt edit-icon" data-image-id="img_gospelrecoll1" data-image-path="assets/gospelrecoll1.jpg"></i><?php endif; ?></div>
-            </div>
-            <div class="event-description"><?php render_content('activities', 'recollection_desc', 'Default recollection description.', $isAdmin); ?></div>
-        </div>
+        // Find any new sections created by the user
+        $new_section_keys = [];
+        $sql_new_keys = "SELECT section_id FROM content WHERE page_name = 'activities' AND section_id LIKE '%_title' AND section_id NOT IN ('fieldtrip_title', 'gpsoa_title', 'recollection_title', 'womens_month_title')";
+        $result_new_keys = $conn->query($sql_new_keys);
+        if ($result_new_keys) {
+            while($row = $result_new_keys->fetch_assoc()) {
+                $new_section_keys[] = str_replace('_title', '', $row['section_id']);
+            }
+        }
+        
+        // Combine default and new sections
+        $all_section_keys = array_merge($default_section_keys, $new_section_keys);
 
-        <div class="event-section">
-            <h2><?php render_content('activities', 'womens_month_title', 'Women’s Month Celebration', $isAdmin); ?></h2>
-            <div class="single-image-grid">
-                <div class="image-container-wrapper"><img src="../assets/womensceleb1.jpg" alt="Women's Month" id="img_womensceleb1"><?php if ($isAdmin): ?><i class="fas fa-pencil-alt edit-icon" data-image-id="img_womensceleb1" data-image-path="assets/womensceleb1.jpg"></i><?php endif; ?></div>
-            </div>
-            <div class="event-description"><?php render_content('activities', 'womens_month_desc', 'Default women\'s month description.', $isAdmin); ?></div>
-        </div>
-
-        <div class="content-card">
-            <h1><?php render_content('activities', 'details_title', 'Activity Details', $isAdmin); ?></h1>
-            <h2><?php render_content('activities', 'extra_curricular_title', 'A. EXTRA-CURRICULAR ACTIVITIES', $isAdmin); ?></h2>
-            <div><?php render_content('activities', 'extra_curricular_desc', 'Default extra-curricular description.', $isAdmin); ?></div>
+        // Loop through each section key and render the section
+        foreach ($all_section_keys as $key):
+            // Get all images for this section
+            $images = [];
+            $stmt_images = $conn->prepare("SELECT image_path FROM activity_images WHERE section_key = ? ORDER BY display_order ASC");
+            $stmt_images->bind_param('s', $key);
+            $stmt_images->execute();
+            $result_images = $stmt_images->get_result();
+            while ($row_image = $result_images->fetch_assoc()) {
+                $images[] = $row_image['image_path'];
+            }
+            $stmt_images->close();
             
-            <h2><?php render_content('activities', 'foundation_celebration_title', 'FOUNDATION CELEBRATION...', $isAdmin); ?></h2>
-            <div><?php render_content('activities', 'foundation_celebration_desc', 'Default foundation celebration description.', $isAdmin, true); ?></div>
+            // Determine the correct grid class based on image count and predefined layouts
+            $grid_class = 'image-grid';
+            if (isset($section_layouts[$key])) {
+                $grid_class = $section_layouts[$key];
+            } elseif (count($images) === 1) {
+                $grid_class = 'single-image-grid';
+            }
+        ?>
+        <div class="event-section" data-section-key="<?php echo htmlspecialchars($key); ?>">
+            <?php if ($isAdmin): ?><button class="delete-section-btn">&times;</button><?php endif; ?>
+            <h2><?php render_content('activities', $key.'_title', 'New Activity', $isAdmin); ?></h2>
+            
+            <div class="<?php echo $grid_class; ?>">
+                <?php foreach ($images as $index => $image_path):
+                    // Ensure unique IDs for images, especially if keys can repeat or have similar names
+                    $imageId = 'img_' . htmlspecialchars($key) . '_' . $index;
+                ?>
+                    <div class="image-container-wrapper">
+                        <img src="../<?php echo htmlspecialchars($image_path); ?>" alt="<?php echo htmlspecialchars($key) . ' image ' . ($index + 1); ?>" id="<?php echo $imageId; ?>">
+                        <?php if ($isAdmin): ?>
+                            <i class="fas fa-pencil-alt edit-icon" data-image-id="<?php echo $imageId; ?>" data-image-path="<?php echo htmlspecialchars($image_path); ?>"></i>
+                        <?php endif; ?>
+                    </div>
+                <?php endforeach; ?>
+            </div>
+            
+            <div class="event-description"><?php render_content('activities', $key.'_desc', '', $isAdmin); ?></div>
+        </div>
+        <?php endforeach; ?>
+        
+        <div class="content-card">
+            <h1><?php render_content('activities', 'details_title', 'IX. SCHOOL ACTIVITIES', $isAdmin); ?></h1>
+            <p><?php render_content('activities', 'details_intro', 'Participation in extra and co-curricular activities is greatly encouraged by the school as the best means to ensure a well-rounded education.', $isAdmin); ?></p>
+
+            <h2><?php render_content('activities', 'extra_curricular_title', 'A. EXTRA-CURRICULAR ACTIVITIES', $isAdmin); ?></h2>
+            <div><?php render_content('activities', 'extra_curricular_desc', "are those which are not directly linked to academic studies but are essential to the development of a well-rounded education of the learner.<br><br>Some of these are Onwards Staff, Girl Scouting, Boy Scouting, Math, Science, English clubs.", $isAdmin, true); ?></div>
+            
+            <h2><?php render_content('activities', 'foundation_celebration_title', 'FOUNDATION CELEBRATION', $isAdmin); ?></h2>
+            <div><?php render_content('activities', 'foundation_celebration_desc', "-\t2nd week of February of every year<br><br>Activities: \tField Demonstration, Games, Quiz Bee & Spelling Contest, Ball Games, Cheer dance<br>Medals and Certificates are to be given to the best Performers during the Recognition/Graduation Day", $isAdmin, true); ?></div>
 
             <h2><?php render_content('activities', 'co_curricular_title', 'B. CO-CURRICULAR ACTIVITIES', $isAdmin); ?></h2>
-            <div><?php render_content('activities', 'co_curricular_desc', 'Default co-curricular description.', $isAdmin); ?></div>
-            <ul><?php render_content('activities', 'co_curricular_list', '<li>Default list</li>', $isAdmin, true); ?></ul>
+            <div><?php render_content('activities', 'co_curricular_desc', "are those which directly supplement and complement the school's academic program.", $isAdmin); ?></div>
+            <ul><?php render_content('activities', 'co_curricular_list', "<li>English: Literary Club</li><li>Science: Scientist's Club</li><li>Filipino: Balagtas Club</li><li>Math: Math Guilds</li><li>HELE: Homemakers, Computer Club</li><li>ART: Art Club</li><li>P.Ε.: Performing Arts Club, Dance Clubs</li>", $isAdmin, true); ?></ul>
 
             <h2><?php render_content('activities', 'student_council_title', 'C. STUDENT COUNCIL', $isAdmin); ?></h2>
-            <div><?php render_content('activities', 'student_council_desc_1', 'Default council description 1.', $isAdmin); ?></div>
-            <div><?php render_content('activities', 'student_council_desc_2', 'Default council description 2.', $isAdmin); ?></div>
-            <ol type="a"><?php render_content('activities', 'student_council_list', '<li>Default list</li>', $isAdmin, true); ?></ol>
+            <div><?php render_content('activities', 'student_council_desc_1', 'The student council represents the general populace. It is charged with the responsibility of working in harmony with the Faculty and Administration.', $isAdmin); ?></div>
+            <div><?php render_content('activities', 'student_council_desc_2', 'No other organization can be formed without the', $isAdmin); ?></div>
+            <ol type="a"><?php render_content('activities', 'student_council_list', "<li>approval of the Director,</li><li>appointment of a faculty member as adviser and,</li><li>a statement of the general aims and policies different from those other organization already existing in the school</li>", $isAdmin, true); ?></ol>
             
             <h2><?php render_content('activities', 'field_trips_title', 'D. FIELD TRIPS', $isAdmin); ?></h2>
-            <div><?php render_content('activities', 'field_trips_desc', 'Default field trips description.', $isAdmin); ?></div>
+            <div><?php render_content('activities', 'field_trips_desc', 'Field trips are valued as supplementary to classroom activities. Whenever field trips are called for, pupils are required to submit a signed parental approval.', $isAdmin); ?></div>
         </div>
     </div>
+
+    <?php if ($isAdmin): ?>
+    <button id="save-activities-btn">Save All Changes</button>
+    <?php endif; ?>
 
     <footer id="contact">
         <div class="footer-wireframe-container">
@@ -290,10 +366,202 @@ function render_content($page, $section, $default, $is_admin, $is_html = false) 
             });
         });
 
+        // --- DYNAMIC ACTIVITY MANAGEMENT SCRIPT ---
+
+        const saveActivitiesBtn = document.getElementById('save-activities-btn');
+        let changesMade = false;
+
+        function showSaveButton() {
+            if (!changesMade && saveActivitiesBtn) {
+                saveActivitiesBtn.style.display = 'block';
+                changesMade = true;
+            }
+        }
+
+        // 1. ADD NEW SECTION LOGIC
+        document.getElementById('add-section-btn')?.addEventListener('click', () => {
+            const sectionTitle = prompt("Enter the title for the new section:");
+            if (!sectionTitle) return;
+
+            const numImagesStr = prompt("How many images will this section have?");
+            const numImages = parseInt(numImagesStr, 10);
+            if (isNaN(numImages) || numImages <= 0) {
+                alert("Please enter a valid number.");
+                return;
+            }
+
+            const sectionCaption = prompt("Enter the caption for the section:");
+
+            // Create new section element
+            const newSection = document.createElement('div');
+            newSection.className = 'event-section new-section'; // Mark as new
+            
+            // Create a unique temporary key
+            const tempKey = 'new_' + sectionTitle.toLowerCase().replace(/\s+/g, '_').replace(/[^\w-]/g, '') + '_' + Date.now();
+            newSection.dataset.sectionKey = tempKey;
+
+
+            // Add delete button
+            const deleteBtn = document.createElement('button');
+            deleteBtn.className = 'delete-section-btn';
+            deleteBtn.innerHTML = '&times;';
+            newSection.appendChild(deleteBtn);
+
+            // Add title
+            const titleElement = document.createElement('h2');
+            titleElement.className = 'section-title'; // Add class for easy selection
+            titleElement.textContent = sectionTitle;
+            newSection.appendChild(titleElement);
+
+            // Create image grid
+            const imageGrid = document.createElement('div');
+            imageGrid.className = 'image-grid';
+            if (numImages === 1) imageGrid.className = 'single-image-grid';
+            else if (numImages === 3 || numImages === 6) imageGrid.className = 'image-grid grid-3-col';
+
+            for (let i = 0; i < numImages; i++) {
+                const wrapper = document.createElement('div');
+                wrapper.className = 'image-container-wrapper';
+                wrapper.style.cssText = 'border: 2px dashed #ccc; padding: 20px; text-align: center; display: flex; align-items: center; justify-content: center;';
+                
+                const fileInput = document.createElement('input');
+                fileInput.type = 'file';
+                fileInput.name = `new_images_${tempKey}[]`; // Name for backend processing
+                fileInput.accept = 'image/*';
+                
+                wrapper.appendChild(fileInput);
+                imageGrid.appendChild(wrapper);
+            }
+            newSection.appendChild(imageGrid);
+
+            // Add main caption
+            const captionElement = document.createElement('div');
+            captionElement.className = 'event-description section-caption'; // Add class
+            captionElement.textContent = sectionCaption || '';
+            newSection.appendChild(captionElement);
+
+            // Append new section after the last existing one
+            const allSections = document.querySelectorAll('.event-section');
+            const lastSection = allSections.length > 0 ? allSections[allSections.length - 1] : document.querySelector('.main-wrapper > p');
+            lastSection.insertAdjacentElement('afterend', newSection);
+
+            showSaveButton();
+        });
+
+        // 2. DELETE LOGIC (handles both new and existing sections)
+        document.querySelector('.main-wrapper').addEventListener('click', function(e) {
+            if (e.target.classList.contains('delete-section-btn')) {
+                if (confirm('Are you sure you want to delete this section?')) {
+                    const sectionToDelete = e.target.closest('.event-section');
+                    if (sectionToDelete) {
+                        if (sectionToDelete.classList.contains('new-section')) {
+                            // If it's a new, unsaved section, just remove it
+                            sectionToDelete.remove();
+                        } else {
+                            // If it's an existing section, hide it and mark for deletion
+                            sectionToDelete.style.display = 'none';
+                            sectionToDelete.classList.add('marked-for-deletion');
+                        }
+                        showSaveButton();
+                    }
+                }
+            }
+        });
+
+        // 3. IMAGE PREVIEW LOGIC
+        document.querySelector('.main-wrapper').addEventListener('change', function(e) {
+            if (e.target.tagName === 'INPUT' && e.target.type === 'file' && e.target.files[0]) {
+                const file = e.target.files[0];
+                const wrapper = e.target.closest('.image-container-wrapper');
+                if (wrapper) {
+                    const reader = new FileReader();
+                    reader.onload = function(event) {
+                        const img = document.createElement('img');
+                        img.src = event.target.result;
+
+                        // Apply styles to make the preview match the final look
+                        const isSingleGrid = wrapper.parentElement.classList.contains('single-image-grid');
+                        if (isSingleGrid) {
+                            img.style.maxWidth = '600px';
+                            img.style.width = '100%';
+                            img.style.borderRadius = '0';
+                        } else {
+                            img.style.width = '100%';
+                            img.style.height = '250px';
+                            img.style.objectFit = 'cover';
+                            img.style.borderRadius = '10px';
+                        }
+
+                        wrapper.innerHTML = '';
+                        wrapper.style.border = 'none';
+                        wrapper.style.padding = '0';
+                        wrapper.appendChild(img);
+                        // Re-add the original file input, but hide it so the file data is still available for submission
+                        e.target.style.display = 'none';
+                        wrapper.appendChild(e.target);
+                    }
+                    reader.readAsDataURL(file);
+                }
+            }
+        });
+
+        // 4. SAVE ALL CHANGES LOGIC
+        saveActivitiesBtn?.addEventListener('click', async () => {
+            saveActivitiesBtn.textContent = 'Saving...';
+            saveActivitiesBtn.disabled = true;
+
+            const formData = new FormData();
+
+            // Collect sections marked for deletion
+            document.querySelectorAll('.marked-for-deletion').forEach(section => {
+                formData.append('deleted_keys[]', section.dataset.sectionKey);
+            });
+
+            // Collect new sections
+            document.querySelectorAll('.new-section').forEach((section, index) => {
+                const title = section.querySelector('.section-title').textContent;
+                const caption = section.querySelector('.section-caption').textContent;
+                const tempKey = section.dataset.sectionKey;
+                
+                formData.append('new_section_titles[]', title);
+                formData.append('new_section_captions[]', caption);
+                formData.append('new_section_keys[]', tempKey);
+
+                // Collect files for this section
+                section.querySelectorAll('input[type="file"]').forEach(fileInput => {
+                    if (fileInput.files.length > 0) {
+                        formData.append(`new_images_${tempKey}[]`, fileInput.files[0]);
+                    }
+                });
+            });
+
+            try {
+                const response = await fetch('../php/manage_activities.php', {
+                    method: 'POST',
+                    body: formData
+                });
+                const result = await response.json();
+
+                if (result.success) {
+                    alert('Changes saved successfully!');
+                    location.reload();
+                } else {
+                    alert('An error occurred: ' + result.message);
+                    saveActivitiesBtn.textContent = 'Save All Changes';
+                    saveActivitiesBtn.disabled = false;
+                }
+            } catch (error) {
+                console.error('Save error:', error);
+                alert('A critical error occurred while saving.');
+                saveActivitiesBtn.textContent = 'Save All Changes';
+                saveActivitiesBtn.disabled = false;
+            }
+        });
+
         // --- TEXT EDITING SCRIPT ---
         const modal = document.getElementById('edit-modal');
         const textarea = document.getElementById('edit-textarea');
-        const saveBtn = document.getElementById('save-edit-btn');
+        const saveModalBtn = document.getElementById('save-edit-btn');
         const cancelBtn = document.getElementById('cancel-edit-btn');
         let currentEditingElement = null;
 
@@ -310,7 +578,7 @@ function render_content($page, $section, $default, $is_admin, $is_html = false) 
             modal.style.display = 'none';
         });
 
-        saveBtn.addEventListener('click', async () => {
+        saveModalBtn.addEventListener('click', async () => {
             const newContent = textarea.value;
             const page = currentEditingElement.dataset.page;
             const section = currentEditingElement.dataset.section;
@@ -338,23 +606,6 @@ function render_content($page, $section, $default, $is_admin, $is_html = false) 
         });
         <?php endif; ?>
 
-        // --- ACCORDION SCRIPT ---
-        var acc = document.getElementsByClassName("accordion");
-        for (var i = 0; i < acc.length; i++) {
-            acc[i].addEventListener("click", function() {
-                this.classList.toggle("active");
-                var panel = this.nextElementSibling;
-                var icon = this.querySelector('.fa-chevron-down');
-                
-                if (panel.style.maxHeight) {
-                    panel.style.maxHeight = null;
-                    if(icon) icon.style.transform = "rotate(0deg)";
-                } else {
-                    panel.style.maxHeight = panel.scrollHeight + "px";
-                    if(icon) icon.style.transform = "rotate(180deg)";
-                }
-            });
-        }
     </script>
 </body>
 </html>

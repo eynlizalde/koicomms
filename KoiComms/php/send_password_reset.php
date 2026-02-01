@@ -1,37 +1,14 @@
 <?php
 include 'database.php';
 
-// Manually require the necessary files for phpdotenv
-// This is required because we are not using Composer's autoloader
-require_once __DIR__ . '/../php/DotEnv/src/Exception/ExceptionInterface.php';
-require_once __DIR__ . '/../php/DotEnv/src/Exception/InvalidPathException.php';
-require_once __DIR__ . '/../php/DotEnv/src/Loader/LoaderInterface.php';
-require_once __DIR__ . '/../php/DotEnv/src/Loader/Loader.php';
-require_once __DIR__ . '/../php/DotEnv/src/Store/StoreInterface.php';
-require_once __DIR__ . '/../php/DotEnv/src/Store/File/Reader.php';
-require_once __DIR__ . '/../php/DotEnv/src/Store/StoreBuilder.php';
-require_once __DIR__ . '/../php/DotEnv/src/Parser/Entry.php';
-require_once __DIR__ . '/../php/DotEnv/src/Parser/ParserInterface.php';
-require_once __DIR__ . '/../php/DotEnv/src/Parser/Parser.php';
-require_once __DIR__ . '/../php/DotEnv/src/Parser/Value.php';
-require_once __DIR__ . '/../php/DotEnv/src/Repository/RepositoryInterface.php';
-require_once __DIR__ . '/../php/DotEnv/src/Repository/Adapter/AdapterInterface.php';
-require_once __DIR__ . '/../php/DotEnv/src/Repository/Adapter/ServerConstAdapter.php';
-require_once __DIR__ . '/../php/DotEnv/src/Repository/Adapter/EnvConstAdapter.php';
-require_once __DIR__ . '/../php/DotEnv/src/Repository/Adapter/PutenvAdapter.php';
-require_once __DIR__ . '/../php/DotEnv/src/Repository/RepositoryBuilder.php';
-require_once __DIR__ . '/../php/DotEnv/src/Validator.php';
-require_once __DIR__ . '/../php/DotEnv/src/Dotenv.php';
+// Use Composer's autoloader to handle all dependencies
+require_once __DIR__ . '/../vendor/autoload.php';
 
-// Include PHPMailer classes
+// Define the classes we will be using
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
 use Dotenv\Dotenv;
-
-require '../php/PHPMailer/src/Exception.php';
-require '../php/PHPMailer/src/PHPMailer.php';
-require '../php/PHPMailer/src/SMTP.php';
 
 // Load environment variables from the .env file in the project root
 try {
@@ -77,7 +54,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $stmt->bind_param("ssi", $token, $expires, $userId);
 
     if ($stmt->execute()) {
-        $resetLink = "http://" . $_SERVER['HTTP_HOST'] . "/koicomms/KoiComms/components/reset_password.php?token=" . $token;
+        // Dynamically generate the reset link to be portable
+        $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? "https://" : "http://";
+        $host = $_SERVER['HTTP_HOST'];
+        $script_dir = dirname(dirname($_SERVER['PHP_SELF']));
+        // Replace backslashes on Windows and ensure a single trailing slash
+        $base_path = rtrim(str_replace('\\', '/', $script_dir), '/');
+        
+        $resetLink = $protocol . $host . $base_path . "/components/reset_password.php?token=" . $token;
         $subject = "Password Reset Request";
         $body = "Dear Admin,\n\n"
               . "You have requested a password reset for your account.\n"
