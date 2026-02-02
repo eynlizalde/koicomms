@@ -31,7 +31,7 @@ Follow these steps exactly, and you'll have the website running in no time!
 2.  You will see a list of services. Find **Apache** and **MySQL**.
 3.  Click the **Start** button for both Apache and MySQL. They should turn green, which means they are running!
 
-![XAMPP Control Panel](https://i.imgur.com/gY2iG53.png)
+![XAMPP Control Panel](https://phpgurukul.com/wp-content/uploads/2023/02/xampp-control-panel-1.png)
 
 ### Step 4: Create and Set Up the Database
 
