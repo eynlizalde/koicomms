@@ -1,70 +1,65 @@
-# Army's Angels Integrated School, INC. - Website
+# Army's Angels Integrated School, INC. - Website Project
 
-This repository contains the source code for the official website of Army's Angels Integrated School, INC. The website is built with PHP and features a custom admin panel for content management.
+Welcome! This is the code for the official website of Army's Angels Integrated School, INC. This guide will help you set it up on your own computer.
 
-## Key Features
+## What You Need
 
-*   **Dynamic Content:** Most text content on the pages (Fees, Activities, etc.) can be edited directly on the page by a logged-in administrator.
-*   **Dynamic Activity Sections:** Administrators can add and delete entire event sections on the "School Activities" page, including uploading new images.
-*   **Configurable Settings:** Key site settings, like the "Enroll Now" link, can be managed from the admin dashboard.
-*   **Secure Admin System:** Features a password-protected admin login and a secure password reset function using email.
+To run this website, you only need one piece of software:
+- **XAMPP**: This is a free and easy-to-install package that includes everything we need: a web server (Apache), a database (MariaDB), and the programming language (PHP).
 
----
+## Step-by-Step Setup Guide
 
-## Setup and Installation
+Follow these steps exactly, and you'll have the website running in no time!
 
-Follow these steps to set up the project in a new development or production environment.
+### Step 1: Download and Install XAMPP
 
-### 1. Prerequisites
+1.  Go to the official XAMPP download page: [https://www.apachefriends.org/download.html](https://www.apachefriends.org/download.html)
+2.  Download the latest version for your operating system (Windows, Mac, or Linux).
+3.  Open the installer you downloaded and follow the on-screen instructions. You can leave all the settings as they are by default.
 
-*   A web server that supports PHP (e.g., Apache, Nginx). XAMPP or WAMP are suitable for local development.
-*   A MySQL or MariaDB database server.
-*   [Composer](https://getcomposer.org/) for managing PHP dependencies.
-*   Access to an SMTP mail server for sending password reset emails.
+### Step 2: Place the Project Files
 
-### 2. Installation Steps
+1.  Find the folder where you have this project's code.
+2.  Copy the entire project folder (the one this `README.md` file is in).
+3.  Go to the folder where you installed XAMPP. On Windows, this is usually `C:\xampp`.
+4.  Inside the `xampp` folder, find another folder called `htdocs`.
+5.  Paste the project folder inside `htdocs`.
 
-1.  **Clone the Repository**
-    ```bash
-    git clone [your-repository-url]
-    cd [repository-folder]
-    ```
+### Step 3: Start Your Web Server
 
-2.  **Install PHP Dependencies**
-    Run Composer in the root directory of the project. This will download libraries like PHPMailer and create the `vendor` directory.
-    ```bash
-    composer install
-    ```
+1.  Open the **XAMPP Control Panel**. You can find this in your computer's Start Menu.
+2.  You will see a list of services. Find **Apache** and **MySQL**.
+3.  Click the **Start** button for both Apache and MySQL. They should turn green, which means they are running!
 
-3.  **Database Setup**
-    *   **Create a Database:** On your database server, create a new, empty database (e.g., `koicomms_db`).
-    *   **Import Data:** Import the database structure and content.
-        > **Note:** This repository should contain a `database.sql` backup file. You can create this by going to your working local phpMyAdmin, selecting your `koicomms_db` database, and using the "Export" feature to save it as a `.sql` file.
-    *   **Update Credentials:** Open the `php/database.php` file and update the following variables with your new database server's details:
-        ```php
-        $servername = "your_db_host"; // e.g., "localhost"
-        $username = "your_db_username";
-        $password = "your_db_password";
-        $dbname = "your_db_name";
-        ```
+![XAMPP Control Panel](https://i.imgur.com/gY2iG53.png)
 
-4.  **Environment Configuration**
-    *   In the root directory, create a file named `.env`.
-    *   Copy the contents of `.env.example` into your new `.env` file.
-    *   Update the variables in the `.env` file with your SMTP mail server credentials. This is required for the "Forgot Password" feature to work.
+### Step 4: Create and Set Up the Database
 
-### 3. Accessing the Admin Panel
+This is the most important step! The database stores all the information for the website.
 
-*   **Login Page:** The admin login page is located at `/components/adminside.php`.
-*   **Credentials:** Admin credentials are stored in the `users` table of your database. You can find or set the admin email and password there. Passwords are encrypted, so to set a new one, you should generate a new password hash.
+1.  Open your web browser (like Chrome, Firefox, etc.).
+2.  Go to this address: `http://localhost/phpmyadmin`
+3.  This is `phpMyAdmin`, the tool we use to manage the database.
+4.  On the left side, click the **New** button to create a new database.
+5.  A box will appear asking for the "Database name". Type exactly `koicomms_db` and click **Create**.
+6.  Now that the database is created, you need to import the website's tables and content. In the left sidebar, click on the `koicomms_db` database you just made.
+7.  Look for the **Import** tab at the top of the page and click it.
+8.  On the import page, you will see a "Choose File" button. Click it.
+9.  Find and select the `database.sql` file that is included with this project.
+10. Scroll to the bottom of the page and click the **Go** button. After a few seconds, you should see a message saying the import was successful.
 
----
+### Step 5: View the Website!
 
-## Admin Functionality Overview
+You're all done! To see the website:
 
-*   **On-Page Editing:** When logged in as an admin, pencil icons (<i class="fas fa-pencil-alt"></i>) will appear next to editable content and images. Clicking these allows you to update content or upload new images directly.
-*   **Activities Page:**
-    *   **Add Section:** Click the "Add New Section" button to create a new activity section.
-    *   **Delete Section:** Click the '×' button on a section to mark it for deletion.
-    *   **Save Changes:** After adding or deleting sections, a "Save All Changes" button will appear. Clicking this makes the changes permanent in the database.
-*   **Admin Dashboard:** Accessible after logging in, this page allows you to manage global site settings, such as the "Enroll Now" link.
+1.  Open your web browser.
+2.  Go to the address: `http://localhost/your-project-folder-name/`
+    -   **Important:** Replace `your-project-folder-name` with the actual name of the folder you pasted into `htdocs`. For example, if your folder is named `KoiComms`, the address is `http://localhost/KoiComms/`.
+
+### How to Log In as Admin
+
+-   **Admin Page**: Go to `http://localhost/your-project-folder-name/components/adminside.php`
+-   **Email**: `admin@aais.com`
+-   **Password**: `admin123`
+
+Once you are logged in, you will see pencil icons next to the text on the pages. You can click these to edit the content directly!
