@@ -266,5 +266,6 @@ function render_content($page, $section, $default, $is_admin, $is_html = false) 
         });
         <?php endif; ?>
     </script>
+    <script src="../assets/js/main.js" defer></script>
 </body>
 </html>

@@ -241,6 +241,7 @@ if ($result && $result->num_rows > 0) {
             heroContent.style.transform = `translate(${contentX}px, ${contentY}px)`;
         });
     </script>
+    <script src="../assets/js/main.js" defer></script>
 </body>
 
 </html>

@@ -287,5 +287,6 @@ Army's Angels Integrated School karamay ng bayan, na nagpupunyagi para sa kinabu
             &copy; 2025 Army's Angels Integrated School, Inc. All Rights Reserved.
         </div>
     </footer>
+    <script src="../assets/js/main.js" defer></script>
 </body>
 </html>

@@ -93,5 +93,6 @@ if ($result && $result->num_rows > 0) {
         </div>
     </div>
 
+    <script src="../assets/js/main.js" defer></script>
 </body>
 </html>
